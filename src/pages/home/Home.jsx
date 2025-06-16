@@ -1,20 +1,70 @@
-import { Link, Navigate } from 'react-router';
-import Logo from '../../components/Logo.jsx';
-import NavButton from '../../components/NavButton.jsx';
+import { useGlobalStore } from "../../hooks/useGlobalStore.js";
+import BookListings from "../../components/BookListings.jsx";
+import SearchBar from "../../components/searchbar/SearchBar.jsx";
+import { useState } from "react";
+import { useNavigate } from "react-router";
 
-function Home() {
+function Landing() {
+  const { store, dispatch } = useGlobalStore();
+  const [searchText, setSearchText] = useState("");
+  const navigate = useNavigate();
+
+  const filteredBooks = store.books.filter((book) => {
+    const q = searchText.toLowerCase();
+    return (
+      book.title?.toLowerCase().includes(q) ||
+      book.author?.name?.toLowerCase().includes(q) ||
+      book.isbn?.toLowerCase().includes(q)
+    );
+  });
   return (
-    <>
-      <h1 className="text-center mt-5 text-body-secondary fw-bold">
-        Uh, I guess you dont have anything to show yet on Home Page?
-      </h1>
-      <Logo />
-      <div className="text-center">
-        <NavButton to="/about" text={'> About'} />
-        <NavButton to="/demo" text="> Demo" />
+    <div className="container-fluid p-0">
+      <div className="container">
+        <div className="d-flex flex-row justify-content-between align-items-center">
+          <h1 className="display-5 fw-bold  mt-5">Featured Books</h1>
+          <a
+            href="/browse"
+            className="text-decoration-none text-body-primary mt-5"
+          >
+            View All
+          </a>
+        </div>
+        <SearchBar
+          placeholder="Search by title, author, or ISBN..."
+          onSearch={setSearchText}
+        />
+        <div className="row mb-4">
+          <BookListings books={searchText ? filteredBooks : store.books} />
+        </div>
       </div>
-    </>
+      <div className="text-center bg-body-secondary py-5">
+        <h1>Ready to Get Started?</h1>
+        <p>
+          Create an account today and access all the resources our library has
+          to offer.
+        </p>
+        <button
+          className="btn btn-primary py-2"
+          onClick={() => navigate("/signup")}
+        >
+          Sign Up Now
+        </button>
+      </div>
+      <div className="text-center bg-body-secondary py-5">
+        <h1>Already Member?</h1>
+        <p>
+          If you already have an account, you can log in to access your
+          personalized library experience.
+        </p>
+        <button
+          className="btn btn-primary py-2"
+          onClick={() => navigate("/signin")}
+        >
+          Sign In
+        </button>
+      </div>
+    </div>
   );
 }
 
-export default Home;
+export default Landing;
