@@ -1,24 +1,28 @@
-import { Link } from 'react-router';
-import { useGlobalStore } from "../hooks/useGlobalStore";
+import { Link } from "react-router-dom";
+import "./BookCard.css";
 
 function BookCard({ book }) {
-
-  const { store } = useGlobalStore();
-  const author = store.authors.find((a) => a.id === book.author_id);
-
   return (
     <Link to={`/books/${book.id}`} className="text-decoration-none">
-        <div className="card shadow-sm">
-            <img src={book.cover_image_url} className="card-img-top" alt="..."/>
-            <div className="card-body">
-                <h5 className="card-title">{book.title}</h5>    
-                <p className="card-text my-1 text-muted">by {author ? `${author.name}` : "Unknown"}</p>
-                <p className="card-text my-1">{book.genre}</p>
-                <p className="card-text mb-0 bg-primary p-1 w-50 text-center rounded opacity-75  fw-medium text-bg-info">{book.price}</p>
-            </div>
+      <div className="card shadow-sm book-card">
+        <img
+          src={book.coverImage}
+          className="card-img-top book-card-img"
+          alt="..."
+        />
+        <div className="card-body book-card-body">
+          <h5 className="card-title">{book.title}</h5>
+          <p className="card-text my-1 text-muted">
+            by {book.author && book.author.name ? book.author.name : "Unknown"}
+          </p>
+          <p className="card-text my-1">{book.genre}</p>
+          <p className="card-text mb-0 bg-primary p-1 w-50 text-center rounded opacity-75 fw-medium text-bg-info mt-auto">
+            {book.price}
+          </p>
         </div>
+      </div>
     </Link>
-  )
+  );
 }
 
-export default BookCard
+export default BookCard;
