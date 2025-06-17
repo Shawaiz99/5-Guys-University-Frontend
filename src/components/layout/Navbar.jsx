@@ -1,6 +1,6 @@
 import "./Navbar.css";
 import { IoLibrary } from "react-icons/io5";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 function Navbar({ children }) {
   return (
@@ -28,13 +28,12 @@ function Navbar({ children }) {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse " id="navbarNav">
-          <div className="d-flex justify-content-center w-100">
+          <div className="d-flex flex-sm-row flex-column align-items-center w-100">
             {/* Ortadaki butonlar */}
-            <div className="d-flex justify-content-center flex-grow-1">
+            <div className="d-flex flex-column flex-sm-row justify-content-center align-items-center gap-1 flex-grow-1">
               {children[0]} {/* Home */}
               {children[1]} {/* Browse */}
             </div>
-
             {/* Sağdaki buton */}
             <div className="btn btn-primary rounded-3 mt-2 p-0">
               {children[2]} {/* Sign In */}

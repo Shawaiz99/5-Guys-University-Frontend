@@ -6,6 +6,7 @@ import "./Landing.css";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 
+
 function Landing() {
   const { store, dispatch } = useGlobalStore();
   const [searchText, setSearchText] = useState("");
@@ -39,7 +40,11 @@ function Landing() {
           onSearch={setSearchText}
         />
         <div className="row mb-4">
-          <BookListings books={searchText ? filteredBooks : store.books} />
+          <BookListings
+            books={
+              searchText ? filteredBooks.slice(0, 4) : store.books.slice(0, 4)
+            }
+          />
         </div>
       </div>
       <div className="text-center bg-body-secondary py-5">
