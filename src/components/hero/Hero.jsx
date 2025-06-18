@@ -18,7 +18,7 @@ function Hero() {
           </a>
           <a
             className="btn btn-outline-light btn-lg transparent p-2"
-            href="#"
+            href="/signin"
             role="button"
           >
             Sign In
