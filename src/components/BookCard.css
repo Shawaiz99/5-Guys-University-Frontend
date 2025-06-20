@@ -1,12 +1,12 @@
 .book-card {
-  height: 370px;
+  height: 470px;
   width: 100%;
   display: flex;
   flex-direction: column;
 }
 
 .book-card-img {
-  height: 150px;
+  height: 250px;
   width: 100%;
   object-fit: cover;
 }

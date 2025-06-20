@@ -1,0 +1,7 @@
+.wishlist-book-img {
+  width: 96px;
+  height: 128px;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  background: #f3f3f3;
+}
