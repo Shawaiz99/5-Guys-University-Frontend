@@ -34,23 +34,8 @@
  *
  * @author dmytro-ch21
  */
-export const initialState = () => ({
-  // demo for todos - replace with your needed state
-  todos: [
-    {
-      id: "1",
-      title: "This comes from your global store, delete it!",
-      completed: false,
-    },
-  ],
-  user: {
-    isAuthenticated: false,
-    userId: 1,
-  },
-  authors,
-  books,
-});
 
+// Define authors and books first
 export const authors = [
   {
     id: "author1",
@@ -283,3 +268,66 @@ export const books = [
     price: 21.99,
   },
 ];
+
+// Now define the initialState function and include wishlist inside the returned object
+export const initialState = () => ({
+  todos: [
+    {
+      id: "1",
+      title: "This comes from your global store, delete it!",
+      completed: false,
+    },
+  ],
+  user: {
+    isAuthenticated: false,
+    userId: 1,
+  },
+  authors,
+  books,
+  wishlist: [
+    {
+      id: "book1",
+      title: "Harry Potter and the Philosopher's Stone",
+      author: authors[0],
+      coverImage:
+        "https://images.pexels.com/photos/3747279/pexels-photo-3747279.jpeg?auto=compress&cs=tinysrgb&h=350",
+      description:
+        "Harry Potter has never even heard of Hogwarts when the letters start dropping on the doormat at number four, Privet Drive. Addressed in green ink on yellowish parchment with a purple seal, they are swiftly confiscated by his grisly aunt and uncle. Then, on Harry's eleventh birthday, a great beetle-eyed giant of a man called Rubeus Hagrid bursts in with some astonishing news: Harry Potter is a wizard, and he has a place at Hogwarts School of Witchcraft and Wizardry.",
+      isbn: "9780747532743",
+      publicationYear: 1997,
+      publisher: "Bloomsbury",
+      pages: 223,
+      genres: ["Fantasy", "Young Adult", "Magic"],
+      language: "English",
+      rating: 4.8,
+      availability: {
+        status: "available",
+        copies: 15,
+        availableCopies: 3,
+      },
+      price: 24.99,
+    },
+    {
+      id: "book2",
+      title: "Harry Potter and the Chamber of Secrets",
+      author: authors[0],
+      coverImage:
+        "https://images.pexels.com/photos/4655426/pexels-photo-4655426.jpeg?auto=compress&cs=tinysrgb&h=350",
+      description:
+        "Harry Potter's summer has included the worst birthday ever, doomy warnings from a house-elf called Dobby, and rescue from the Dursleys by his friend Ron Weasley in a magical flying car! Back at Hogwarts School of Witchcraft and Wizardry for his second year, Harry hears strange whispers echo through empty corridors - and then the attacks start.",
+      isbn: "9780747538486",
+      publicationYear: 1998,
+      publisher: "Bloomsbury",
+      pages: 251,
+      genres: ["Fantasy", "Young Adult", "Magic"],
+      language: "English",
+      rating: 4.7,
+      availability: {
+        status: "available",
+        copies: 12,
+        availableCopies: 5,
+      },
+      price: 24.99,
+    },
+  ],
+});

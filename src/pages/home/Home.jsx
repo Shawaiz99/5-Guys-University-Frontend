@@ -19,7 +19,7 @@ function Landing() {
   });
   return (
     <div className="container-fluid p-0">
-      <div className="container">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="d-flex flex-row justify-content-between align-items-center">
           <h1 className="display-5 fw-bold  mt-5">Featured Books</h1>
           <a
@@ -48,19 +48,6 @@ function Landing() {
           onClick={() => navigate("/signup")}
         >
           Sign Up Now
-        </button>
-      </div>
-      <div className="text-center bg-body-secondary py-5">
-        <h1>Already Member?</h1>
-        <p>
-          If you already have an account, you can log in to access your
-          personalized library experience.
-        </p>
-        <button
-          className="btn btn-primary py-2"
-          onClick={() => navigate("/signin")}
-        >
-          Sign In
         </button>
       </div>
     </div>

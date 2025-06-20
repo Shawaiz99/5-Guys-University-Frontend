@@ -1,11 +1,12 @@
-import { createBrowserRouter } from 'react-router';
-import RootLayout from './RootLayout.jsx';
-import ErrorPage from './ErrorPage.jsx';
-import Home from '../pages/home/Home.jsx';
-import About from '../pages/about/About.jsx';
-import Demo from '../pages/demo/Demo.jsx';
-import Landing from '../pages/landing/Landing.jsx';
+import { createBrowserRouter } from "react-router";
+import RootLayout from "./RootLayout.jsx";
+import ErrorPage from "./ErrorPage.jsx";
+import Home from "../pages/home/Home.jsx";
+import About from "../pages/about/About.jsx";
+import Demo from "../pages/demo/Demo.jsx";
+import Landing from "../pages/landing/Landing.jsx";
 import SignUp from "../pages/signup/SignUp.jsx";
+import WishlistPage from "../pages/wishlist/wishlist.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -20,6 +21,7 @@ export const router = createBrowserRouter([
       { path: "/demo", element: <Demo /> },
       { path: "/landing", element: <Landing /> },
       { path: "/signup", element: <SignUp /> },
+      { path: "/wishlist", element: <WishlistPage /> },
     ],
   },
 ]);
