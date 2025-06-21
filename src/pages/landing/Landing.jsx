@@ -7,10 +7,15 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 
 
+
 function Landing() {
   const { store, dispatch } = useGlobalStore();
   const [searchText, setSearchText] = useState("");
   const navigate = useNavigate();
+
+  // if (!store?.books) {
+  //   return <p className="text-center mt-5">Loading books...</p>;
+  // }
 
   const filteredBooks = store.books.filter((book) => {
     const q = searchText.toLowerCase();
@@ -39,7 +44,7 @@ function Landing() {
           placeholder="Search by title, author, or ISBN..."
           onSearch={setSearchText}
         />
-        <div className="row mb-4">
+        <div className="col-11 mx-auto mb-4">
           <BookListings
             books={
               searchText ? filteredBooks.slice(0, 4) : store.books.slice(0, 4)

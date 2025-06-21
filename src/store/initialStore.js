@@ -36,6 +36,7 @@
  */
 
 // Define authors and books first
+
 export const authors = [
   {
     id: "author1",
@@ -271,16 +272,12 @@ export const books = [
 
 // Now define the initialState function and include wishlist inside the returned object
 export const initialState = () => ({
-  todos: [
-    {
-      id: "1",
-      title: "This comes from your global store, delete it!",
-      completed: false,
-    },
-  ],
-  user: {
+    user: {
+    error: null,
     isAuthenticated: false,
-    userId: 1,
+    user: null,
+    token: null,
+    loading: false,
   },
   authors,
   books,
@@ -331,3 +328,4 @@ export const initialState = () => ({
     },
   ],
 });
+
