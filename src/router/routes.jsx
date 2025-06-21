@@ -7,6 +7,7 @@ import Demo from "../pages/demo/Demo.jsx";
 import Landing from "../pages/landing/Landing.jsx";
 import SignUp from "../pages/signup/SignUp.jsx";
 import WishlistPage from "../pages/wishlist/wishlist.jsx";
+import CartPage from "../pages/cart/cart.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -22,6 +23,7 @@ export const router = createBrowserRouter([
       { path: "/landing", element: <Landing /> },
       { path: "/signup", element: <SignUp /> },
       { path: "/wishlist", element: <WishlistPage /> },
+      { path: "/cart", element: <CartPage /> },
     ],
   },
 ]);
