@@ -11,7 +11,7 @@ function SearchBar({ placeholder = "Search...", onSearch }) {
   };
 
   return (
-    <div className="my-4 mx-auto search-bar">
+    <div className="my-4 mx-auto search-bar col-10">
       <FiSearch className="text-gray-500 position-absolute z-2 fisearch" />
       <input
         type="text"

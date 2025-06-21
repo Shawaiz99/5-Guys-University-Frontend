@@ -1,3 +1,5 @@
+import { cleanToken, saveToken } from "../utils/auth";
+
 /**
  * Reducer function to manage the state.
  *
@@ -19,15 +21,53 @@
  */
 export function storeReducer(state, action) {
   switch (action.type) {
-    case 'ADD_TASK':
+    case "AUTH_START":
       return {
         ...state,
-        todos: [...state.todos, action.payload.task],
+        auth: { ...state.auth, loading: true, error: null },
       };
-    case 'DELETE_TASK':
-      return state.todos.filter((todo) => todo !== action.payload.id);
-    case 'SET_TODOS':
-      return { ...state, todos: action.payload.todos };
+    case "AUTH_SUCCESS": {
+       const payload = action.payload;
+
+      if (!payload || !payload.token || !payload.user) {
+        console.error("Invalid payload in AUTH_SUCCESS:", payload);
+        return {
+          ...state,
+          auth: {
+            ...state.auth,
+            loading: false,
+            error: "Login response did not contain token or user.",
+            isAuthenticated: false,
+          },
+        };
+      }
+      const { token, user } = action.payload;
+      saveToken(token);
+      return {
+        ...state,
+        auth: {
+          ...state.auth,
+          loading: false,
+          error: null,
+          isAuthenticated: true,
+          user,
+          token,
+        },
+      };
+    }
+    case "LOGOUT":
+      cleanToken();
+      return {
+        ...state,
+        auth: {
+          user: null,
+          token: null,
+          isAuthenticated: false,
+          loading: false,
+          error: null,
+        },
+      };
+
     default:
       return state;
   }
