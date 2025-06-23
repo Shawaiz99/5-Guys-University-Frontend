@@ -2,8 +2,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { Heart, Trash2, ShoppingCart } from "lucide-react";
 import { useGlobalStore } from "../../hooks/useGlobalStore";
 import "./wishlist.css";
-import BookCard from "../../components/BookCard";
 import { useLocation } from "react-router";
+import BookCard from "../../components/BookCard";
 
 const WishlistPage = () => {
   const { store, dispatch } = useGlobalStore();
@@ -45,7 +45,6 @@ const WishlistPage = () => {
 
       {isEmpty ? (
         <div className="text-center py-16 bg-white rounded-lg shadow-md">
-          <Heart className="h-16 w-16 mx-auto text-gray-400 mb-4" />
           <h2 className="text-xl font-semibold text-gray-900 mb-2">
             Your wishlist is empty
           </h2>

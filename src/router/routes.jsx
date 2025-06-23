@@ -7,6 +7,7 @@ import SignUp from "../pages/signup/SignUp.jsx";
 import SignIn from "../pages/signin/SignIn.jsx";
 import ProtectedRoute from './ProtectedRoute.jsx';
 import WishlistPage from "../pages/wishlist/wishlist.jsx";
+import CartPage from "../pages/cart/cart.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -21,7 +22,7 @@ export const router = createBrowserRouter([
       { path: "/signin", element: <SignIn /> },
       { path: "/home", element: <Home /> },
       { path: "/wishlist", element: <WishlistPage /> },
-
+      { path: "/cart", element: <CartPage /> },
     ],
   },
 ]);
