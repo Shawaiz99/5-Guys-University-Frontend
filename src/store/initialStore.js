@@ -330,4 +330,30 @@ export const initialState = () => ({
       price: 24.99,
     },
   ],
+  cart: [
+    {
+      id: "book3",
+      title: "1984",
+      author: authors[1],
+      coverImage:
+        "https://images.pexels.com/photos/267586/pexels-photo-267586.jpeg?auto=compress&cs=tinysrgb&h=350",
+      price: 19.99,
+    },
+    {
+      id: "book4",
+      title: "Pride and Prejudice",
+      author: authors[2],
+      coverImage:
+        "https://images.pexels.com/photos/1148399/pexels-photo-1148399.jpeg?auto=compress&cs=tinysrgb&h=350",
+      price: 15.99,
+    },
+    {
+      id: "book5",
+      title: "The Great Gatsby",
+      author: authors[3],
+      coverImage:
+        "https://images.pexels.com/photos/164977/pexels-photo-164977.jpeg?auto=compress&cs=tinysrgb&h=350",
+      price: 14.99,
+    },
+  ],
 });

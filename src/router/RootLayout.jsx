@@ -2,6 +2,7 @@ import { Outlet } from "react-router";
 import Navbar from "../components/layout/Navbar.jsx";
 import Footer from "../components/layout/Footer.jsx";
 import NavButton from "../components/NavButton.jsx";
+import { ShoppingCart } from "lucide-react";
 
 function RootLayout() {
   return (
@@ -11,6 +12,7 @@ function RootLayout() {
         <NavButton to="/my-library" text="My Library " />
         <NavButton to="/signin" text="Sign In " />
         <NavButton to="/wishlist" text="Wishlist " />
+        <NavButton to="/cart" icon={<ShoppingCart />} />
       </Navbar>
 
       <main className="flex-grow-1">

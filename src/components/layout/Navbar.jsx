@@ -1,6 +1,7 @@
 import "./Navbar.css";
 import { IoLibrary } from "react-icons/io5";
 import { Link } from "react-router";
+import { Trash2, ShoppingCart } from "lucide-react";
 
 function Navbar({ children }) {
   return (
@@ -34,9 +35,13 @@ function Navbar({ children }) {
               {children[1]} {/* My Library */}
               {children[3]} {/* Wishlist */}
             </div>
-
-            <div className="btn btn-primary text-white rounded-3 mt-2 p-0">
-              {children[2]} {/* Sign In */}
+            <div className="text-white rounded-3 mt-2">
+              <Link to="/cart" className="me-2 block mt-4 fs-2">
+                <ShoppingCart />
+              </Link>
+              <span className="btn btn-primary">
+                {children[2]} {/* Sign In */}
+              </span>
             </div>
           </div>
         </div>
