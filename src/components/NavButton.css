@@ -1,4 +1,4 @@
-a.active {
+/* a.active {
   color: rgb(7, 7, 69) !important;
   text-decoration: none;
   margin-left: 1rem;
@@ -13,4 +13,20 @@ a.non-active {
 a.active:hover,
 a.non-active:hover {
   color: rgb(57, 57, 159) !important;
+} */
+a.active {
+  color: rgb(34, 0, 120);
+  text-decoration: none;
+  margin: 0 0.5rem 0 0.5rem;
+}
+
+a.not-active {
+  color: #000000e9 !important;
+  text-decoration: none;
+  margin: 0 0.5rem 0 0.5rem;
+}
+
+a.active:hover,
+a.not-active:hover {
+  color: rgba(77, 75, 75, 0.874) !important;
 }

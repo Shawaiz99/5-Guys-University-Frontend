@@ -1,13 +1,14 @@
-import { createBrowserRouter } from 'react-router';
-import RootLayout from './RootLayout.jsx';
-import ErrorPage from './ErrorPage.jsx';
-import Home from '../pages/home/Home.jsx';
-import Landing from '../pages/landing/Landing.jsx';
+import { createBrowserRouter } from "react-router-dom";
+import RootLayout from "./RootLayout.jsx";
+import ErrorPage from "./ErrorPage.jsx";
+import Home from "../pages/home/Home.jsx";
+import Landing from "../pages/landing/Landing.jsx";
 import SignUp from "../pages/signup/SignUp.jsx";
 import SignIn from "../pages/signin/SignIn.jsx";
-import ProtectedRoute from './ProtectedRoute.jsx';
+import ProtectedRoute from "./ProtectedRoute.jsx";
 import WishlistPage from "../pages/wishlist/wishlist.jsx";
-import CartPage from "../pages/cart/cart.jsx";
+import CartPage from "../pages/cart/Cart.jsx";
+import My_Library from "../pages/my_library/My_library.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -17,12 +18,34 @@ export const router = createBrowserRouter([
     children: [
       // Define individual routes for the application
       { index: true, element: <Landing /> },
+      { path: "/home", element: <Home /> },
       { path: "/landing", element: <Landing /> },
+      {
+        path: "/cart",
+        element: (
+          <ProtectedRoute>
+            <CartPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/wishlist",
+        element: (
+          <ProtectedRoute>
+            <WishlistPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/my-library",
+        element: (
+          <ProtectedRoute>
+            <My_Library />
+          </ProtectedRoute>
+        ),
+      },
       { path: "/signup", element: <SignUp /> },
       { path: "/signin", element: <SignIn /> },
-      { path: "/home", element: <Home /> },
-      { path: "/wishlist", element: <WishlistPage /> },
-      { path: "/cart", element: <CartPage /> },
     ],
   },
 ]);

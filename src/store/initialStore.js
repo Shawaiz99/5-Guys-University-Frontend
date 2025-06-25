@@ -272,7 +272,7 @@ export const books = [
 
 // Now define the initialState function and include wishlist inside the returned object
 export const initialState = () => ({
-    user: {
+  user: {
     error: null,
     isAuthenticated: false,
     user: null,
@@ -353,5 +353,26 @@ export const initialState = () => ({
       price: 14.99,
     },
   ],
+  library: [
+    {
+      id: "book6",
+      title: "To Kill a Mockingbird",
+      author: authors[4],
+      coverImage:
+        "https://images.pexels.com/photos/3747279/pexels-photo-3747279.jpeg?auto=compress&cs=tinysrgb&h=350",
+      price: 18.99,
+      checkedOutDate: "2023-10-01",
+      dueDate: "2023-10-15",
+    },
+    {
+      id: "book7",
+      title: "The Hobbit",
+      author: authors[5],
+      coverImage:
+        "https://images.pexels.com/photos/3747279/pexels-photo-3747279.jpeg?auto=compress&cs=tinysrgb&h=350",
+      price: 18.99,
+      checkedOutDate: "2023-10-01",
+      dueDate: "2023-10-15",
+    },
+  ],
 });
-

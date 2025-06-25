@@ -1,9 +1,13 @@
 import "./Navbar.css";
 import { IoLibrary } from "react-icons/io5";
-import { Link } from "react-router";
-import { Trash2, ShoppingCart } from "lucide-react";
+import { Link } from "react-router-dom";
+import { ShoppingCart } from "lucide-react";
+import { useGlobalStore } from "../../hooks/useGlobalStore";
 
 function Navbar({ children }) {
+  const { store } = useGlobalStore();
+  const cartCount = store.cart?.length || 0;
+
   return (
     <nav className="navbar navbar-expand-sm navbarcss sticky-top">
       <div className="container d-flex justify-content-between align-items-center">
@@ -33,14 +37,21 @@ function Navbar({ children }) {
             <div className=" d-flex flex-column flex-sm-row justify-content-center align-items-center gap-1 flex-grow-1">
               {children[0]} {/* Home */}
               {children[1]} {/* My Library */}
-              {children[3]} {/* Wishlist */}
+              {children[2]} {/* Wishlist */}
             </div>
-            <div className="text-white rounded-3 mt-2">
-              <Link to="/cart" className="me-2 block mt-4 fs-2">
+            <div className="text-white rounded-3 mt-2 position-relative">
+              <Link
+                to="/cart"
+                className="me-2 block mt-4 fs-2 position-relative"
+              >
                 <ShoppingCart />
+                {cartCount > 0 && <span className="badge">{cartCount}</span>}
               </Link>
-              <span className="btn btn-primary">
-                {children[2]} {/* Sign In */}
+              <span className="btn btn-sm btn-primary ms-2">
+                {children[4]} {/* Sign In */}
+              </span>
+              <span className="btn btn-sm btn-outline-secondary ms-2">
+                {children[5]} {/* Sign Up */}
               </span>
             </div>
           </div>

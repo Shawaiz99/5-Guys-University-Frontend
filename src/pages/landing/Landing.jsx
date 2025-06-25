@@ -4,9 +4,7 @@ import BookListings from "../../components/BookListings.jsx";
 import SearchBar from "../../components/searchbar/SearchBar.jsx";
 import "./Landing.css";
 import { useState } from "react";
-import { useNavigate } from "react-router";
-
-
+import { useNavigate } from "react-router-dom";
 
 function Landing() {
   const { store, dispatch } = useGlobalStore();

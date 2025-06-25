@@ -8,13 +8,13 @@ export async function fetchTodos(userId) {
 
 export async function addTodo(todo) {
   const options = {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(todo),
   };
-  const response = await fetch('/api/todos', options);
+  const response = await fetch("/api/todos", options);
   if (!response.ok) {
     throw new Error(response.statusText);
   }
@@ -23,7 +23,7 @@ export async function addTodo(todo) {
 
 export async function deleteTodo(todoId, userId) {
   const options = {
-    method: 'DELETE',
+    method: "DELETE",
   };
   const response = await fetch(
     `/api/todos/${todoId}?user_id=${userId}`,
