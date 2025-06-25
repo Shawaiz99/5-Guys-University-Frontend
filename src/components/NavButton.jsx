@@ -1,12 +1,15 @@
-import { Link } from "react-router";
+import { NavLink } from "react-router-dom";
 import "./NavButton.css";
 
-function NavButton({ to, text }) {
+function NavButton({ to, text, callback }) {
   return (
     <>
-      <Link className="btn  btn-sm m-2 " to={to}>
-        {text}
-      </Link>
+      <NavLink
+        to={to}
+        className={({ isActive }) => `${isActive ? "active" : "not-active"}`}
+      >
+        <span onClick={callback}>{text}</span>
+      </NavLink>
     </>
   );
 }

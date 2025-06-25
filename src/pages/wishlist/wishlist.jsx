@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Heart, Trash2, ShoppingCart } from "lucide-react";
 import { useGlobalStore } from "../../hooks/useGlobalStore";
 import "./wishlist.css";
-import { useLocation } from "react-router";
+import { useLocation } from "react-router-dom";
 import BookCard from "../../components/BookCard";
 
 const WishlistPage = () => {

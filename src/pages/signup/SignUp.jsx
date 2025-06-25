@@ -1,10 +1,10 @@
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { IoLibrary } from "react-icons/io5";
 import "./Signup.css";
 import { registerUser } from "../../api/auth";
 
-function SignIn() {
+function SignUp() {
   const [showError, setShowError] = useState({
     show: false,
     message: "",
@@ -17,7 +17,7 @@ function SignIn() {
     username: "",
   });
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (formData.password !== formData.confirmPassword) {
@@ -29,13 +29,13 @@ function SignIn() {
     }
 
     try {
-        await registerUser(formData);
-        navigate("/signin");
-    }catch(e){
-        setShowError({
-            show: true,
-            message: e.message,
-        })
+      await registerUser(formData);
+      navigate("/signin");
+    } catch (e) {
+      setShowError({
+        show: true,
+        message: e.message,
+      });
     }
   };
 
@@ -64,7 +64,7 @@ function SignIn() {
       </div>
       <div className="mb-3">
         <label for="textInput" className="form-label">
-            Username
+          Username
         </label>
         <input
           type="text"
@@ -148,4 +148,4 @@ function SignIn() {
   );
 }
 
-export default SignIn;
+export default SignUp;

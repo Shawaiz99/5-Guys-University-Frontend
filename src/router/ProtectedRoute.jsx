@@ -1,6 +1,6 @@
-import { Navigate } from 'react-router';
-import { useGlobalStore } from '../hooks/useGlobalStore';
-import { isTokenValid } from '../utils/auth.js';
+import { Navigate } from "react-router-dom";
+// import { useGlobalStore } from '../hooks/useGlobalStore';
+import { isTokenValid } from "../utils/auth.js";
 
 function ProtectedRoute({ children }) {
   // const { store } = useGlobalStore();
