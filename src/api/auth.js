@@ -1,7 +1,7 @@
 const API_BASE = "http://localhost:5001";
-
+const API_PREFIX = "/api/v1";
 export async function registerUser(payload) {
-  const URL = `${API_BASE}/api/v1/auth/register`;
+  const URL = `${API_BASE}${API_PREFIX}/auth/register`;
   const response = await fetch(URL, {
     method: "POST",
     headers: {
@@ -26,7 +26,7 @@ export async function registerUser(payload) {
  */
 
 export async function loginUser(payload) {
-  const url = `${API_BASE}/api/v1/auth/login`;
+  const url = `${API_BASE}${API_PREFIX}/auth/login`;
   const response = await fetch(url, {
     method: "POST",
     headers: {

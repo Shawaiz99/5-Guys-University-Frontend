@@ -3,30 +3,96 @@ import { Trash2, ShoppingCart, Heart } from "lucide-react";
 import { useGlobalStore } from "../../hooks/useGlobalStore";
 import BookCard from "../../components/BookCard";
 import "./Cart.css";
+import { useEffect, useState } from "react";
+import { getAllBooks } from "../../api/books";
+import {
+  getCart,
+  addToWishlist,
+  removeFromCart as apiRemoveFromCart,
+  clearCart as apiClearCart,
+} from "../../api/user";
+import { getToken } from "../../utils/auth";
 
 const CartPage = () => {
+  const [cartItems, setCartItems] = useState([]);
+  const [fetchedBooks, setFetchedBooks] = useState([]);
   const { store, dispatch } = useGlobalStore();
   const navigate = useNavigate();
   const location = useLocation();
-  const cartItems = store.cart || [];
+
+  useEffect(() => {
+    const fetchCartAndBooks = async () => {
+      try {
+        const token = getToken();
+        if (!token) return;
+
+        const cartData = await getCart(token);
+        setCartItems(cartData.items || []);
+
+        const booksData = await getAllBooks();
+        setFetchedBooks(
+          Array.isArray(booksData) ? booksData : booksData.books || []
+        );
+      } catch (error) {
+        setCartItems([]);
+        setFetchedBooks([]);
+      }
+    };
+    fetchCartAndBooks();
+  }, []);
+
   const cartDetails = cartItems
     .map((item) => {
-      const book = store.books.find((b) => b.id === item.id);
+      const book = fetchedBooks.find(
+        (b) => b.id === item.book_id || b.id === item.id
+      );
       return {
         ...item,
         book,
       };
     })
     .filter((item) => item.book);
-  // const productsInCartLength = cartDetails.length;
+
   const isEmpty = cartDetails.length === 0;
 
-  const removeFromCart = (bookId) => {
-    dispatch({ type: "REMOVE_FROM_CART", payload: { bookId } });
+  const removeFromCart = async (bookId) => {
+    try {
+      const token = getToken();
+      await apiRemoveFromCart(token, bookId);
+      window.dispatchEvent(new Event("cart-updated"));
+
+      const cartData = await getCart(token);
+      setCartItems(cartData.items || []);
+    } catch (error) {
+      alert("Failed to remove from cart.");
+    }
   };
 
-  const clearCart = () => {
-    dispatch({ type: "CLEAR_CART" });
+  const saveForLater = async (bookId) => {
+    try {
+      const token = getToken();
+      await addToWishlist(token, bookId);
+      window.dispatchEvent(new Event("cart-updated"));
+
+      await removeFromCart(bookId);
+    } catch (error) {
+      alert("Failed to save for later.");
+    }
+  };
+
+  const clearCart = async () => {
+    try {
+      const token = getToken();
+      await Promise.all(
+        cartItems.map((item) =>
+          apiRemoveFromCart(token, item.book_id || item.id)
+        )
+      );
+      setCartItems([]);
+      window.dispatchEvent(new Event("cart-updated"));
+    } catch (error) {
+      alert("Failed to clear cart.");
+    }
   };
 
   const total = cartDetails.reduce((sum, item) => {
@@ -66,7 +132,12 @@ const CartPage = () => {
               {/* Book image */}
               <div className="d-flex flex-row rounded-2xl overflow-hidden gap-4">
                 <img
-                  src={item.book?.coverImage}
+                  src={
+                    item.book?.coverImage ||
+                    item.book?.cover_image_url ||
+                    item.book?.coverImageUrl ||
+                    "/default-book-cover.png"
+                  }
                   alt={item.book?.title}
                   className="cart-image rounded-2xl w-24 h-32 object-cover"
                 />
@@ -89,7 +160,7 @@ const CartPage = () => {
               <div className="d-flex flex-row justify-content-end me-4 gap-2 align-items-center">
                 <button
                   type="button"
-                  onClick={() => console.log("save for later", item.bookId)}
+                  onClick={() => saveForLater(item.book.id)}
                   className="btn btn-sm btn-outline-primary px-2 py-0"
                   style={{
                     fontSize: "0.75rem",
@@ -102,7 +173,7 @@ const CartPage = () => {
                 </button>
                 <button
                   type="button"
-                  onClick={() => removeFromCart(item.bookId)}
+                  onClick={() => removeFromCart(item.book.id)}
                   className="btn btn-sm btn-danger d-flex align-items-center px-2 py-0"
                   style={{
                     fontSize: "0.75rem",

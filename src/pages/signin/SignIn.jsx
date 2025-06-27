@@ -78,17 +78,11 @@ function SignIn() {
           required
         />
       </div>
-      <div className="mb-3">
+      <div className="mb-3 d-flex flex-column">
         <label for="passwordInput" className="form-label">
           Password
         </label>
 
-        <button
-          className="btn btn-link"
-          onClick={() => setShowForgot(!showForgot)}
-        >
-          Forgot Password?
-        </button>
         <input
           name="password"
           type="password"
@@ -100,6 +94,12 @@ function SignIn() {
           placeholder="Enter your password..."
           required
         />
+        <button
+          className="btn btn-link"
+          onClick={() => setShowForgot(!showForgot)}
+        >
+          Forgot Password?
+        </button>
         {showError.show && (
           <div className="alert alert-danger" role="alert">
             {showError.message}

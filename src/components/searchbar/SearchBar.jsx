@@ -10,8 +10,13 @@ function SearchBar({ placeholder = "Search...", onSearch }) {
     if (onSearch) onSearch(e.target.value);
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (onSearch) onSearch(searchText);
+  };
+
   return (
-    <div className="my-4 mx-auto search-bar col-10">
+    <form className="my-4 mx-auto search-bar col-10" onSubmit={handleSubmit}>
       <FiSearch className="text-gray-500 position-absolute z-2 fisearch" />
       <input
         type="text"
@@ -24,7 +29,7 @@ function SearchBar({ placeholder = "Search...", onSearch }) {
         className="cursor-pointer position-absolute  z-2 fifilter"
         onClick={() => console.log("Filter options clicked")}
       />
-    </div>
+    </form>
   );
 }
 
