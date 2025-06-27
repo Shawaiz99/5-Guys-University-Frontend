@@ -26,7 +26,7 @@
   padding: 0.25em 0.5em;
   font-size: 0.75rem;
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 7px;
+  right: 3px;
   transform: translate(50%, -50%);
 }

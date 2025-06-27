@@ -9,6 +9,8 @@ import ProtectedRoute from "./ProtectedRoute.jsx";
 import WishlistPage from "../pages/wishlist/wishlist.jsx";
 import CartPage from "../pages/cart/Cart.jsx";
 import My_Library from "../pages/my_library/My_library.jsx";
+import BookDetail from "../pages/book_detail/Book_Detail.jsx";
+import BooksPage from "../pages/Books/Books.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -25,6 +27,14 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <CartPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/books/:id",
+        element: (
+          <ProtectedRoute>
+            <BookDetail />
           </ProtectedRoute>
         ),
       },
@@ -46,6 +56,10 @@ export const router = createBrowserRouter([
       },
       { path: "/signup", element: <SignUp /> },
       { path: "/signin", element: <SignIn /> },
+      {
+        path: "/books",
+        element: <BooksPage />,
+      },
     ],
   },
 ]);
