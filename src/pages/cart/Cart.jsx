@@ -13,6 +13,10 @@ import {
 } from "../../api/user";
 import { getToken } from "../../utils/auth";
 
+export const triggerCartUpdate = () => {
+  window.dispatchEvent(new Event("cart-updated"));
+};
+
 const CartPage = () => {
   const [cartItems, setCartItems] = useState([]);
   const [fetchedBooks, setFetchedBooks] = useState([]);
@@ -59,7 +63,7 @@ const CartPage = () => {
     try {
       const token = getToken();
       await apiRemoveFromCart(token, bookId);
-      window.dispatchEvent(new Event("cart-updated"));
+      triggerCartUpdate();
 
       const cartData = await getCart(token);
       setCartItems(cartData.items || []);
@@ -72,7 +76,7 @@ const CartPage = () => {
     try {
       const token = getToken();
       await addToWishlist(token, bookId);
-      window.dispatchEvent(new Event("cart-updated"));
+      triggerCartUpdate();
 
       await removeFromCart(bookId);
     } catch (error) {
@@ -89,7 +93,7 @@ const CartPage = () => {
         )
       );
       setCartItems([]);
-      window.dispatchEvent(new Event("cart-updated"));
+      triggerCartUpdate();
     } catch (error) {
       alert("Failed to clear cart.");
     }
@@ -104,23 +108,23 @@ const CartPage = () => {
 
   return (
     <div className="d-flex flex-column border p-4 bg-white">
-      <h1 className="text-3xl font-bold text-gray-900 mb-6">Your Cart</h1>
+      <h3 className="text-3xl font-bold text-gray-900 mb-5">Your Cart</h3>
 
       {isEmpty ? (
         <div className="text-center py-16 bg-white rounded-lg shadow-md">
-          <ShoppingCart className="h-16 w-16 mx-auto text-gray-400 mb-4" />
           <h2 className="text-xl font-semibold text-gray-900 mb-2">
             Your cart is empty
           </h2>
           <p className="text-gray-600 mb-8">
             Looks like you haven't added any books to your cart yet.
           </p>
-          <Link
-            to="/browse"
-            className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+          <a
+            className="btn btn-light btn-lg bg-primary text-white p-2"
+            href="/home"
+            role="button"
           >
             Browse Books
-          </Link>
+          </a>
         </div>
       ) : (
         <>
@@ -131,24 +135,34 @@ const CartPage = () => {
             >
               {/* Book image */}
               <div className="d-flex flex-row rounded-2xl overflow-hidden gap-4">
-                <img
-                  src={
-                    item.book?.coverImage ||
-                    item.book?.cover_image_url ||
-                    item.book?.coverImageUrl ||
-                    "/default-book-cover.png"
-                  }
-                  alt={item.book?.title}
-                  className="cart-image rounded-2xl w-24 h-32 object-cover"
-                />
+                <Link
+                  to={`/books/${item.book?.id}`}
+                  className="text-decoration-none"
+                >
+                  <img
+                    src={
+                      item.book?.coverImage ||
+                      item.book?.cover_image_url ||
+                      item.book?.coverImageUrl ||
+                      "/default-book-cover.png"
+                    }
+                    alt={item.book?.title}
+                    className="cart-image rounded-2xl w-24 h-32 object-cover"
+                  />
+                </Link>
                 <div>
                   <Link
-                    to={`/books/${item.bookId}`}
+                    to={`/books/${item.book?.id}`}
                     className="text-lg text-decoration-none font-semibold text-gray-800 hover:text-primary-600"
                   >
                     {item.book?.title}
                   </Link>
-                  <p className="text-sm text-gray-500">
+                  <p
+                    to={`/authors/${
+                      item.book?.author?.id || item.book?.author_id
+                    }`}
+                    className="text-sm text-gray-500"
+                  >
                     By {item.book?.author.name}
                   </p>
                   <p className=" text-md font-bold text-gray-900 mt-2">
@@ -201,17 +215,17 @@ const CartPage = () => {
               Clear Cart
             </button>
           </div>
+          <div className="mt-4 d-flex flex-row justify-content-center align-items-center gap-3">
+            <Link
+              to="/checkout"
+              className="btn btn-primary px-4 py-2"
+              style={{ fontSize: "1rem" }}
+            >
+              Proceed to Checkout
+            </Link>
+          </div>
         </>
       )}
-      <div className="mt-4 d-flex flex-row justify-content-center align-items-center gap-3">
-        <Link
-          to="/checkout"
-          className="btn btn-primary px-4 py-2"
-          style={{ fontSize: "1rem" }}
-        >
-          Proceed to Checkout
-        </Link>
-      </div>
     </div>
   );
 };

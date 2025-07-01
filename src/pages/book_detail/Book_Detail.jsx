@@ -1,39 +1,89 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { useGlobalStore } from "../../hooks/useGlobalStore";
 import BookCard from "../../components/BookCard.jsx";
 import { Trash2, ShoppingCart, Heart } from "lucide-react";
+import { getBookById, getAllBooks } from "../../api/books";
+import { addToCart, addToWishlist } from "../../api/user";
+import { getToken, isTokenValid } from "../../utils/auth";
 
 const BookDetail = () => {
   const { id: bookId } = useParams();
-  const { store } = useGlobalStore();
-  const book = store.books.find((b) => String(b.id) === String(bookId));
+  const [book, setBook] = useState(null);
+  const [allBooks, setAllBooks] = useState([]);
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    const fetchBook = async () => {
+      setLoading(true);
+      try {
+        const data = await getBookById(bookId);
+        setBook(data.book);
+      } catch {
+        setBook(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+    const fetchAllBooks = async () => {
+      try {
+        const books = await getAllBooks();
+        setAllBooks(Array.isArray(books) ? books : books.books || []);
+      } catch {
+        setAllBooks([]);
+      }
+    };
+    fetchBook();
+    fetchAllBooks();
+  }, [bookId]);
+  console.log("Book Detail:", book);
   if (!book) {
-    return (
-      <div className="container py-5 text-center">
-        <h1 className="display-5 mb-3">Book Not Found</h1>
-        <p className="text-muted mb-4">
-          The book you're looking for doesn't exist or has been removed.
-        </p>
-        <Link to="/home" className="btn btn-primary">
-          Browse All Books
-        </Link>
-      </div>
-    );
+    return <div>Book is null or undefined!</div>;
   }
-  const moreByAuthor = store.books.filter(
+
+  if (book) {
+    Object.keys(book).forEach((key) => {
+      console.log(key, book[key]);
+    });
+  }
+
+  const moreByAuthor = allBooks.filter(
     (b) =>
       (b.author?.id || b.author_id) === (book.author?.id || book.author_id) &&
       b.id !== book.id
   );
+
   const genres = Array.isArray(book.genres)
     ? book.genres
     : typeof book.genres === "string"
     ? book.genres.split(",").map((g) => g.trim())
     : [];
 
-  console.log("book.genres", book && book.genres);
+  const handleAddToCart = async () => {
+    const token = getToken();
+    if (!token || !isTokenValid(token)) {
+      alert("Please sign in to add items to your cart.");
+      return;
+    }
+    try {
+      await addToCart(token, book.id);
+      window.dispatchEvent(new Event("cart-updated"));
+    } catch (e) {
+      alert("It is already in your cart.");
+    }
+  };
+
+  const handleAddToWishlist = async () => {
+    const token = getToken();
+    if (!token || !isTokenValid(token)) {
+      alert("Please sign in to add items to your wishlist.");
+      return;
+    }
+    try {
+      await addToWishlist(token, book.id);
+    } catch (e) {
+      alert("It is already in your wishlist.");
+    }
+  };
 
   return (
     <div className="container py-5 animate-fade-in">
@@ -57,8 +107,8 @@ const BookDetail = () => {
         <div className="col-4">
           <div className="bg-white rounded shadow-sm p-3">
             <img
-              src={book.coverImage}
-              alt={book.title}
+              src={book.cover_image_url || ""}
+              alt={book.title || ""}
               className="img-fluid rounded"
             />
           </div>
@@ -71,7 +121,7 @@ const BookDetail = () => {
             to={`/authors/${book.author?.id || book.author_id}`}
             className="h5 text-primary text-decoration-none"
           >
-            {book.author?.name || book.author}
+            {book.author?.name || ""}
           </Link>
           <div className="d-flex align-items-center mt-3 mb-4">
             <div className="me-3">
@@ -89,18 +139,16 @@ const BookDetail = () => {
                 {book.rating ? book.rating.toFixed(1) : "0.0"}/5.0
               </span>
             </div>
-            {/* Availability */}
-            {book.availability && (
-              <span
-                className={`badge ms-3 ${
-                  book.availability.status === "available"
-                    ? "bg-success"
-                    : "bg-secondary"
-                }`}
-              >
-                {book.availability.status}
-              </span>
-            )}
+
+            <span
+              className={`badge ms-3 ${
+                book.availabilaty_status === "Available"
+                  ? "bg-success"
+                  : "bg-secondary"
+              }`}
+            >
+              {book.availabilaty_status}
+            </span>
           </div>
 
           <p className="lead">{book.description}</p>
@@ -115,11 +163,9 @@ const BookDetail = () => {
                   <strong>Publisher:</strong> {book.publisher || "-"}
                 </li>
                 <li className="list-group-item">
-                  <strong>Published:</strong> {book.publicationYear}
+                  <strong>Published:</strong> {book.publication_year}
                 </li>
-                <li className="list-group-item">
-                  <strong>Language:</strong> {book.language || "-"}
-                </li>
+
                 <li className="list-group-item">
                   <strong>Pages:</strong> {book.pages || "-"}
                 </li>
@@ -128,32 +174,16 @@ const BookDetail = () => {
             <div className="col-md-6">
               <ul className="list-group list-group-flush">
                 <li className="list-group-item">
-                  <strong>Status:</strong>{" "}
-                  <span
-                    className={
-                      book.availability?.status === "available"
-                        ? "text-success"
-                        : "text-danger"
-                    }
-                  >
-                    {book.availability?.status || "Unknown"}
-                  </span>
+                  <strong>Status:</strong> {book.availabilaty_status}
                 </li>
                 <li className="list-group-item">
-                  <strong>Copies:</strong> {book.availability?.copies || "-"}
+                  <strong>Copies:</strong> {book.quantity}
                 </li>
                 <li className="list-group-item">
-                  <strong>Available:</strong>{" "}
-                  {book.availability?.availableCopies || "-"}
-                </li>
-                {book.availability?.dueDate && (
-                  <li className="list-group-item">
-                    <strong>Due Date:</strong>{" "}
-                    {new Date(book.availability.dueDate).toLocaleDateString()}
-                  </li>
-                )}
-                <li className="list-group-item">
-                  <strong>Price:</strong> ${book.price?.toFixed(2)}
+                  <strong>Price:</strong>{" "}
+                  {book.price !== null && book.price !== undefined
+                    ? `$${Number(book.price).toFixed(2)}`
+                    : "-"}
                 </li>
               </ul>
             </div>
@@ -174,16 +204,13 @@ const BookDetail = () => {
           </div>
 
           <div className="mb-4">
-            <button
-              className="btn btn-success me-2"
-              onClick={() => alert("Added to cart!")}
-            >
+            <button className="btn btn-success me-2" onClick={handleAddToCart}>
               <ShoppingCart className="me-1" />
               Add to Cart
             </button>
             <button
               className="btn btn-outline-primary"
-              onClick={() => alert("Added to wishlist!")}
+              onClick={handleAddToWishlist}
             >
               <Heart className="me-1" />
               Add to Wishlist
@@ -200,10 +227,10 @@ const BookDetail = () => {
               More by {book.author?.name || book.author}
             </h2>
             <Link
-              to={`/authors/${book.author?.id || book.author_id}`}
-              className="text-primary"
+              to={`/books`}
+              className="btn btn-light btn-sm bg-primary text-white p-2"
             >
-              View all;
+              View All
             </Link>
           </div>
           <div className="row">

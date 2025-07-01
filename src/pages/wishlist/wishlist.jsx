@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { getToken, getDecodedToken, isTokenValid } from "../../utils/auth";
-import { get_user_by_id } from "../../api/user";
+import { get_user_by_id, addToCart as apiAddToCart } from "../../api/user";
 import { getAllBooks } from "../../api/books";
 import BookCard from "../../components/BookCard";
 
@@ -12,7 +12,6 @@ function WishlistPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Wishlist'i API'den çek
   const fetchWishlist = async () => {
     try {
       if (!isTokenValid()) {
@@ -24,7 +23,6 @@ function WishlistPage() {
       const decodedToken = getDecodedToken();
       const userId = parseInt(decodedToken.sub);
 
-      // Kullanıcı verisini çek (wishlist_items: [{book_id, user_id}, ...])
       const userData = await get_user_by_id(token, userId);
       console.log("userData.user:", userData.user);
       console.log(
@@ -45,7 +43,6 @@ function WishlistPage() {
 
       console.log("books:", books);
 
-      // Wishlistteki kitapların detaylarını bul
       const wishlistDetails = books.filter((book) =>
         wishlistBookIds.map(String).includes(String(book.id))
       );
@@ -60,27 +57,39 @@ function WishlistPage() {
 
   useEffect(() => {
     fetchWishlist();
-    // eslint-disable-next-line
   }, [navigate]);
 
-  // Wishlist'ten kitap sil
   const handleRemoveItem = async (bookId) => {
     try {
       const token = getToken();
       const decodedToken = getDecodedToken();
       const userId = parseInt(decodedToken.sub);
 
-      // Sadece bookId yeterli olabilir, backend endpointine göre userId de gerekirse ekle
       await import("../../api/user").then(({ removeFromWishlist }) =>
         removeFromWishlist(token, bookId)
       );
 
-      // API'den tekrar çekmek daha güvenli
       fetchWishlist();
     } catch (error) {
       alert("Failed to remove from wishlist.");
     }
   };
+
+  const handleAddToCart = async (bookId) => {
+    try {
+      const token = getToken();
+      const decodedToken = getDecodedToken();
+      const userId = parseInt(decodedToken.sub);
+
+      await apiAddToCart(token, bookId);
+      window.dispatchEvent(new Event("cart-updated"));
+      // Optionally, you can remove from wishlist after adding to cart:
+      // await handleRemoveItem(bookId);
+    } catch (error) {
+      alert(`This book is already in your cart.`);
+    }
+  };
+
   console.log("Wishlist Items:", wishlistItems);
   if (loading) {
     return (
@@ -123,6 +132,7 @@ function WishlistPage() {
                 isWishlisted={true}
                 onWishlistAdded={fetchWishlist}
                 onWishlistRemove={handleRemoveItem}
+                addToCart={() => handleAddToCart(book.id)}
               />
             </div>
           ))}
