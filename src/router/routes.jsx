@@ -11,6 +11,8 @@ import CartPage from "../pages/cart/Cart.jsx";
 import My_Library from "../pages/my_library/My_library.jsx";
 import BookDetail from "../pages/book_detail/Book_Detail.jsx";
 import BooksPage from "../pages/Books/Books.jsx";
+import CheckoutPage from "../pages/checkout/Checkout.jsx";
+import OrderHistory from "../pages/order_history/Order_History.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -27,6 +29,22 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <CartPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/checkout",
+        element: (
+          <ProtectedRoute>
+            <CheckoutPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/order-history",
+        element: (
+          <ProtectedRoute>
+            <OrderHistory />
           </ProtectedRoute>
         ),
       },

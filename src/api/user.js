@@ -138,3 +138,42 @@ export async function clearCart(token) {
   }
   return data;
 }
+
+export async function getLibrary(token) {
+  const response = await fetch(`${API_BASE}${API_PREFIX}/my-library/books`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!response.ok) throw new Error("Failed to fetch library");
+  return await response.json();
+}
+
+export async function getOrders(token) {
+  const response = await fetch(`${API_BASE}${API_PREFIX}/orders`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  });
+  if (!response.ok) {
+    const data = await response.json();
+    throw new Error(data.error || response.statusText);
+  }
+  return await response.json();
+}
+
+export async function placeOrder(token, orderData) {
+  const response = await fetch("http://localhost:5001/api/v1/orders", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(orderData),
+  });
+  if (!response.ok) {
+    const data = await response.json();
+    throw new Error(data.error || "Order failed");
+  }
+  return response.json();
+}
