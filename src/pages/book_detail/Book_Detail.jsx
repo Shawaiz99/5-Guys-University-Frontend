@@ -86,7 +86,7 @@ const BookDetail = () => {
   };
 
   return (
-    <div className="container py-5 animate-fade-in">
+    <div className=" py-5 animate-fade-in">
       <nav className="mb-4">
         <ol className="breadcrumb">
           <li className="breadcrumb-item">

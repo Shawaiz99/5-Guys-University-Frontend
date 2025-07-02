@@ -1,9 +1,35 @@
+import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { IoLibrary } from "react-icons/io5";
-import { ShoppingCart, User, Heart, Home } from "lucide-react";
+import { ShoppingCart, User, Heart } from "lucide-react";
 import "./Navbar.css";
+import { getDecodedToken, getToken } from "../../utils/auth";
+import { get_user_by_id } from "../../api/user";
 
-function Navbar({ isLoggedIn, cartCount, user, onLogout }) {
+function Navbar({ isLoggedIn, cartCount, onLogout }) {
+  const [displayName, setDisplayName] = useState("User");
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const token = getToken();
+      const decoded = getDecodedToken();
+      if (token && decoded?.sub) {
+        try {
+          const userData = await get_user_by_id(token, decoded.sub);
+          setDisplayName(
+            userData?.user?.profile_information?.first_name ||
+              userData?.user?.username ||
+              userData?.user?.email ||
+              "User"
+          );
+        } catch {
+          setDisplayName("User");
+        }
+      }
+    };
+    if (isLoggedIn) fetchUser();
+  }, [isLoggedIn]);
+
   return (
     <nav className="navbar navbar-expand-md navbarcss sticky-top">
       <div className="container">
@@ -69,7 +95,7 @@ function Navbar({ isLoggedIn, cartCount, user, onLogout }) {
                   >
                     <li>
                       <span className="dropdown-item-text fw-bold">
-                        {user?.name}
+                        {displayName}
                       </span>
                     </li>
                     <li>

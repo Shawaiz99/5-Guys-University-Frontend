@@ -113,7 +113,7 @@ function WishlistPage() {
   }
 
   return (
-    <div className="container py-4">
+    <div className=" py-4">
       <h2 className="mb-3 fw-bold">My Wishlist</h2>
 
       {wishlistItems.length === 0 ? (
@@ -126,7 +126,7 @@ function WishlistPage() {
       ) : (
         <div className="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4 mt-3">
           {wishlistItems.map((book) => (
-            <div className="col" key={book.id}>
+            <div className="" key={book.id}>
               <BookCard
                 book={book}
                 isWishlisted={true}

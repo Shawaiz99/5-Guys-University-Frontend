@@ -106,7 +106,7 @@ function CheckoutPage() {
 
   if (success) {
     return (
-      <div className="container py-5 text-center">
+      <div className="py-5 text-center">
         <h2>Order Successful!</h2>
         <p>Your order has been placed. Redirecting to your library...</p>
       </div>
@@ -114,7 +114,7 @@ function CheckoutPage() {
   }
 
   return (
-    <div className="container py-5">
+    <div className="py-5">
       <h2 className="mb-4">Checkout</h2>
       <div className="row">
         {/* Cart Summary */}
