@@ -55,7 +55,7 @@ function SignUp() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="container form-signup shadow p-4 rounded "
+      className="container flex-column form-signup shadow p-4 rounded "
     >
       <div className="text-center mb-4">
         <IoLibrary className="fs-1 text-primary mb-3 " />

@@ -53,7 +53,7 @@ function Landing() {
       <div className="row">
         <Hero isLoggedIn={isLoggedIn} />
       </div>
-      <div className="container">
+      <div className="container flex-column">
         <div className="d-flex flex-row justify-content-between align-items-center">
           <h1 className="display-5 fw-bold  mt-5">Featured Books</h1>
           <Link

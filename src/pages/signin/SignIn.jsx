@@ -55,7 +55,7 @@ function SignIn() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="container form-signin shadow p-4 rounded"
+      className="container flex-column form-signin shadow p-4 rounded"
     >
       <div className="text-center mb-4">
         <IoLibrary className="fs-1 text-primary mb-3 " />

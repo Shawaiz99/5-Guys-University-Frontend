@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "animate.css": "^4.1.1",
-    "bootstrap": "^5.3.3",
+    "bootstrap": "^5.3.7",
     "jwt-decode": "^4.0.0",
     "lucide-react": "^0.517.0",
     "react": "^18.3.1",

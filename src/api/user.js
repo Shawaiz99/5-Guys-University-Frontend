@@ -139,6 +139,7 @@ export async function clearCart(token) {
   return data;
 }
 
+
 export async function getLibrary(token) {
   const response = await fetch(`${API_BASE}${API_PREFIX}/my-library/books`, {
     headers: { Authorization: `Bearer ${token}` },
@@ -155,10 +156,102 @@ export async function getOrders(token) {
       "Content-Type": "application/json",
     },
   });
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.error || response.statusText);
+  }
+  return data;
+}
+
+// profile
+export async function updateUser(token, userId, payload) {
+  const url = `${API_BASE}${API_PREFIX}/users/${userId}`;
+  const response = await fetch(url, {
+    method: "PUT",
+    headers: { ...jsonHeaders, Authorization: `Bearer ${token}` },
+    body: JSON.stringify(payload),
+  });
+
+  const data = await response.json();
+
+  console.log("Update user response:", data);
+
+  if (!response.ok) {
+    throw new Error(data.error || response.statusText);
+  }
+  return data;
+}
+
+export async function updateUserProfile(token, userId, payload) {
+  console.log("Making updateUserProfile request with headers", jsonHeaders);
+  const url = `${API_BASE}${API_PREFIX}/users/${userId}/profile`;
+  const response = await fetch(url, {
+    method: "PUT",
+    headers: { ...jsonHeaders, Authorization: `Bearer ${token}` },
+    body: JSON.stringify(payload),
+  });
+
+  const data = await response.json();
+
+  console.log("Update profile response:", data);
+
+  if (!response.ok) {
+    throw new Error(data.error || response.statusText);
+  }
+  return data;
+}
+
+export async function uploadProfileImage(token, userId, imageFile) {
+  const url = `${API_BASE}${API_PREFIX}/users/${userId}/profile/image`;
+
+  const formData = new FormData();
+  formData.append("image", imageFile);
+
+  const response = await fetch(url, {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "User-Agent": "client-web",
+      // Don't set Content-Type for FormData - browser will set it automatically with boundary
+    },
+    body: formData,
+  });
+
+  const data = await response.json();
+
+  console.log("Upload image response:", data);
+
+  if (!response.ok) {
+    throw new Error(data.error || response.statusText);
+  }
+  return data;
+}
+
+export async function changePassword(token, userId, payload) {
+  const url = `${API_BASE}${API_PREFIX}/users/${userId}/change-password`;
+  const response = await fetch(url, {
+    method: "POST", // veya backend neyi destekliyorsa
+    headers: { ...jsonHeaders, Authorization: `Bearer ${token}` },
+    body: JSON.stringify(payload),
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.error || response.statusText);
+  }
+  return data;
+}
+
+export async function deleteUser(token, userId) {
+  const url = `${API_BASE}${API_PREFIX}/users/${userId}`;
+  const response = await fetch(url, {
+    method: "DELETE",
+    headers: { Authorization: `Bearer ${token}` },
+  });
   if (!response.ok) {
     const data = await response.json();
     throw new Error(data.error || response.statusText);
   }
+
   return await response.json();
 }
 
@@ -177,3 +270,5 @@ export async function placeOrder(token, orderData) {
   }
   return response.json();
 }
+
+
