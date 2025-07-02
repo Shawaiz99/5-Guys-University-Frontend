@@ -13,6 +13,9 @@ import BookDetail from "../pages/book_detail/Book_Detail.jsx";
 import BooksPage from "../pages/Books/Books.jsx";
 import CheckoutPage from "../pages/checkout/Checkout.jsx";
 import OrderHistory from "../pages/order_history/Order_History.jsx";
+import Profile from "../pages/profile/Profile.jsx";
+
+
 
 export const router = createBrowserRouter([
   {
@@ -22,8 +25,8 @@ export const router = createBrowserRouter([
     children: [
       // Define individual routes for the application
       { index: true, element: <Landing /> },
-      { path: "/home", element: <Home /> },
       { path: "/landing", element: <Landing /> },
+      { path: "/home", element: <Home /> },
       {
         path: "/cart",
         element: (
@@ -77,6 +80,14 @@ export const router = createBrowserRouter([
       {
         path: "/books",
         element: <BooksPage />,
+      },
+      {
+        path: "/profile",
+        element: (
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        ),
       },
     ],
   },
