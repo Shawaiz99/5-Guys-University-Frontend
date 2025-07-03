@@ -4,7 +4,7 @@ import ErrorPage from "./ErrorPage.jsx";
 import Home from "../pages/home/Home.jsx";
 import Landing from "../pages/landing/Landing.jsx";
 import SignUp from "../pages/signup/SignUp.jsx";
-import SignIn from "../pages/signin/Signin.jsx";
+import SignIn from "../pages/signin/SignIn.jsx";
 import ProtectedRoute from "./ProtectedRoute.jsx";
 import WishlistPage from "../pages/wishlist/wishlist.jsx";
 import CartPage from "../pages/cart/Cart.jsx";

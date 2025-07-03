@@ -4,7 +4,7 @@ import { IoLibrary } from "react-icons/io5";
 import { useGlobalStore } from "../../hooks/useGlobalStore";
 import { loginUser } from "../../api/auth";
 import { saveToken } from "../../utils/auth";
-import "./Signin.css";
+import "./SignIn.css";
 
 function SignIn() {
   const navigate = useNavigate();
