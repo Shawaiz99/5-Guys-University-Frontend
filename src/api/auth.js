@@ -20,13 +20,13 @@ export async function registerUser(payload) {
 }
 
 /**
- * POST /auth/login
+ * POST /auth/signin
  * @param {Object} payload {email, password}
  * @return {Promise<Object>} {token, user}
  */
 
-export async function loginUser(payload) {
-  const url = `${API_BASE}${API_PREFIX}/auth/login`;
+export async function signinUser(payload) {
+  const url = `${API_BASE}${API_PREFIX}/auth/signin`;
   const response = await fetch(url, {
     method: "POST",
     headers: {

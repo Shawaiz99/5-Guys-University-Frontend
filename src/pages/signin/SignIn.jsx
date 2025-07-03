@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { IoLibrary } from "react-icons/io5";
 import { useGlobalStore } from "../../hooks/useGlobalStore";
-import { loginUser } from "../../api/auth";
+import { signinUser } from "../../api/auth";
 import { saveToken } from "../../utils/auth";
 import "./SignIn.css";
 
@@ -24,11 +24,11 @@ function SignIn() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log("Login Form Data:", formData);
+    console.log("signin Form Data:", formData);
     dispatch({ type: "AUTH_START" });
 
     try {
-      const data = await loginUser(formData);
+      const data = await signinUser(formData);
       saveToken(data.token);
       dispatch({
         type: "AUTH_SUCCESS",
@@ -36,7 +36,7 @@ function SignIn() {
       });
       navigate("/home");
     } catch (err) {
-      console.log("Login failed:", err.message);
+      console.log("signin failed:", err.message);
       dispatch({ type: "AUTH_FAILURE", payload: err.message });
       setShowError({
         show: true,

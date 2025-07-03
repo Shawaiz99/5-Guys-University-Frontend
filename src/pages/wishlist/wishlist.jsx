@@ -15,7 +15,7 @@ function WishlistPage() {
   const fetchWishlist = async () => {
     try {
       if (!isTokenValid()) {
-        navigate("/login");
+        navigate("/signin");
         return;
       }
       setLoading(true);

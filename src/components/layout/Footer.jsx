@@ -73,7 +73,7 @@ function Footer() {
             <ul className="list-unstyled">
               <li>
                 <Link
-                  to="/login"
+                  to="/signin"
                   className="text-secondary text-decoration-none d-block mb-2 hover-text-light"
                 >
                   Sign In

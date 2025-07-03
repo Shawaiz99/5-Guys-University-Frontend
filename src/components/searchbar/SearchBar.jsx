@@ -17,7 +17,7 @@ function SearchBar({ placeholder = "Search...", onSearch }) {
 
   return (
     <form className="my-4 mx-auto search-bar col-10" onSubmit={handleSubmit}>
-      <FiSearch className="text-gray-500 position-absolute z-2 fisearch" />
+      <FiSearch className="text-gray-500 position-absolute ms-2 z-2 fisearch" />
       <input
         type="text"
         value={searchText}
@@ -26,7 +26,7 @@ function SearchBar({ placeholder = "Search...", onSearch }) {
         className="search-input"
       />
       <FiFilter
-        className="cursor-pointer position-absolute  z-2 fifilter"
+        className="cursor-pointer position-absolute me-2  z-2 fifilter"
         onClick={() => console.log("Filter options clicked")}
       />
     </form>

@@ -27,7 +27,7 @@ export function storeReducer(state, action) {
         auth: { ...state.auth, loading: true, error: null },
       };
     case "AUTH_SUCCESS": {
-       const payload = action.payload;
+      const payload = action.payload;
 
       if (!payload || !payload.token || !payload.user) {
         console.error("Invalid payload in AUTH_SUCCESS:", payload);
@@ -36,7 +36,7 @@ export function storeReducer(state, action) {
           auth: {
             ...state.auth,
             loading: false,
-            error: "Login response did not contain token or user.",
+            error: "signin response did not contain token or user.",
             isAuthenticated: false,
           },
         };
