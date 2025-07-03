@@ -51,11 +51,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/books/:id",
-        element: (
-          <ProtectedRoute>
-            <BookDetail />
-          </ProtectedRoute>
-        ),
+        element: <BookDetail />,
       },
       {
         path: "/wishlist",
