@@ -8,7 +8,7 @@ import SignIn from "../pages/signin/SignIn.jsx";
 import ProtectedRoute from "./ProtectedRoute.jsx";
 import WishlistPage from "../pages/wishlist/wishlist.jsx";
 import CartPage from "../pages/cart/Cart.jsx";
-import My_Library from "../pages/my_library/My_library.jsx";
+import MyLibrary from "../pages/my_library/My_Library.jsx";
 import BookDetail from "../pages/book_detail/Book_Detail.jsx";
 import BooksPage from "../pages/Books/Books.jsx";
 import CheckoutPage from "../pages/checkout/Checkout.jsx";
@@ -71,7 +71,7 @@ export const router = createBrowserRouter([
         path: "/my-library",
         element: (
           <ProtectedRoute>
-            <My_Library />
+            <MyLibrary />
           </ProtectedRoute>
         ),
       },

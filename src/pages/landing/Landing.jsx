@@ -75,29 +75,27 @@ function Landing() {
 
         {/* Browse by Category */}
         <section className="py-5 bg-white">
-          <div className="container">
-            <h2 className="h4 fw-bold text-dark mb-4">Browse by Genre</h2>
-            <div className="row">
-              {uniqueGenres.slice(0, 12).map((genre, index) => (
-                <div
-                  className="col-6 col-sm-4 col-md-3 col-lg-2 mb-4"
-                  key={index}
+          <h2 className="h4 fw-bold text-dark mb-4">Browse by Genre</h2>
+          <div className="row">
+            {uniqueGenres.slice(0, 12).map((genre, index) => (
+              <div
+                className="col-6 col-sm-4 col-md-3 col-lg-2 mb-4"
+                key={index}
+              >
+                <Link
+                  to={`/books?genre=${encodeURIComponent(genre)}`}
+                  className="text-decoration-none"
                 >
-                  <Link
-                    to={`/books?genre=${encodeURIComponent(genre)}`}
-                    className="text-decoration-none"
-                  >
-                    <div className="p-3 bg-light rounded border text-center h-100 genre-hover">
-                      <div className="fw-medium text-dark">{genre}</div>
-                      <div className="text-muted small">
-                        {books.filter((book) => book.genre === genre).length}{" "}
-                        books
-                      </div>
+                  <div className="p-3 bg-light rounded border text-center h-100 genre-hover">
+                    <div className="fw-medium text-dark">{genre}</div>
+                    <div className="text-muted small">
+                      {books.filter((book) => book.genre === genre).length}{" "}
+                      books
                     </div>
-                  </Link>
-                </div>
-              ))}
-            </div>
+                  </div>
+                </Link>
+              </div>
+            ))}
           </div>
         </section>
       </div>

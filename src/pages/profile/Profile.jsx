@@ -103,11 +103,11 @@ const handlePasswordSubmit = async (e) => {
           });
 
           setForm({
-            first_name: userResponse.profile_information?.first_name || "",
-            last_name: userResponse.profile_information?.last_name || "",
-            username: userResponse.username || "",
-            email: userResponse.email || "",
-            user_role: userResponse.user_role || "",
+            first_name: userResponse.user.profile_information?.first_name || "",
+            last_name: userResponse.user.profile_information?.last_name || "",
+            username: userResponse.user.username || "",
+            email: userResponse.user.email || "",
+            user_role: userResponse.user.user_role || "",
           });
         }
       } catch (error) {
