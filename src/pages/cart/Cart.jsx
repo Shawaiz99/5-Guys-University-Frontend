@@ -2,7 +2,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Trash2, ShoppingCart, Heart } from "lucide-react";
 import { useGlobalStore } from "../../hooks/useGlobalStore";
 import BookCard from "../../components/BookCard";
-import "./Cart.css";
+import "./cart.css";
 import { useEffect, useState } from "react";
 import { getAllBooks } from "../../api/books";
 import {
