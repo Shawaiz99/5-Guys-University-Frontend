@@ -1,5 +1,5 @@
-const API_BASE = "http://localhost:5001";
-const API_PREFIX = "/api/v1";
+const API_BASE = import.meta.env.VITE_BACKEND_HOST;
+const API_PREFIX = import.meta.env.VITE_API_PREFIX;
 const jsonHeaders = {
   "Content-Type": "application/json",
   "User-Agent": "client-web",
@@ -139,7 +139,6 @@ export async function clearCart(token) {
   return data;
 }
 
-
 export async function getLibrary(token) {
   const response = await fetch(`${API_BASE}${API_PREFIX}/my-library/books`, {
     headers: { Authorization: `Bearer ${token}` },
@@ -256,7 +255,7 @@ export async function deleteUser(token, userId) {
 }
 
 export async function placeOrder(token, orderData) {
-  const response = await fetch("http://localhost:5001/api/v1/orders", {
+  const response = await fetch(`${API_BASE}${API_PREFIX}/orders`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -270,5 +269,3 @@ export async function placeOrder(token, orderData) {
   }
   return response.json();
 }
-
-
