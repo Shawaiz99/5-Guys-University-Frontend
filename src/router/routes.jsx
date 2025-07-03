@@ -4,7 +4,7 @@ import ErrorPage from "./ErrorPage.jsx";
 import Home from "../pages/home/Home.jsx";
 import Landing from "../pages/landing/Landing.jsx";
 import SignUp from "../pages/signup/SignUp.jsx";
-import SignIn from "../pages/signin/SignIn.jsx";
+import SignIn from "../pages/signin/Signin.jsx";
 import ProtectedRoute from "./ProtectedRoute.jsx";
 import WishlistPage from "../pages/wishlist/wishlist.jsx";
 import CartPage from "../pages/cart/Cart.jsx";
@@ -14,8 +14,6 @@ import BooksPage from "../pages/Books/Books.jsx";
 import CheckoutPage from "../pages/checkout/Checkout.jsx";
 import OrderHistory from "../pages/order_history/Order_History.jsx";
 import Profile from "../pages/profile/Profile.jsx";
-
-
 
 export const router = createBrowserRouter([
   {
