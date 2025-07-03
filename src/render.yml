@@ -1,0 +1,17 @@
+# Exported from Render on 2025-07-03T04:51:35Z
+services:
+  - type: web
+    name: 5-Guys-University-Frontend
+    runtime: static
+    repo: https://github.com/Shawaiz99/5-Guys-University-Frontend
+    envVars:
+      - key: VITE_APP_NAME
+        sync: false
+      - key: VITE_API_PREFIX
+        sync: false
+      - key: VITE_BACKEND_HOST
+        sync: false
+    buildCommand: npm install; npm run build
+    staticPublishPath: dist
+    autoDeployTrigger: commit
+version: "1"
