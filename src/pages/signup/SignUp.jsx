@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { IoLibrary } from "react-icons/io5";
-import "./Signup.css";
+import "./SignUp.css";
 import { registerUser } from "../../api/auth";
 
 function SignUp() {
