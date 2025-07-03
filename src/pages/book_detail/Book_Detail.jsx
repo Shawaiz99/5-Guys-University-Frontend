@@ -185,21 +185,10 @@ const BookDetail = () => {
                     ? `$${Number(book.price).toFixed(2)}`
                     : "-"}
                 </li>
+                <li className="list-group-item">
+                  <strong>Genre:</strong> {book.genre}
+                </li>
               </ul>
-            </div>
-          </div>
-
-          <div className="mb-6">
-            <h3 className="font-semibold text-gray-900 mb-3">Genre</h3>
-            <div className="flex flex-wrap gap-2">
-              {book.genre && (
-                <Link
-                  to={`/books?genre=${encodeURIComponent(book.genre)}`}
-                  className="badge badge-primary"
-                >
-                  {book.genre}
-                </Link>
-              )}
             </div>
           </div>
 
