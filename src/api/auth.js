@@ -26,7 +26,7 @@ export async function registerUser(payload) {
  */
 
 export async function signinUser(payload) {
-  const url = `${API_BASE}${API_PREFIX}/auth/signin`;
+  const url = `${API_BASE}${API_PREFIX}/auth/login`;
   const response = await fetch(url, {
     method: "POST",
     headers: {
