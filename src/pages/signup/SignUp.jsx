@@ -1,8 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { IoLibrary } from "react-icons/io5";
-import "./Signup.css";
 import { registerUser } from "../../api/auth";
+import "./Signup.css";
 
 function SignUp() {
   const [showError, setShowError] = useState({
