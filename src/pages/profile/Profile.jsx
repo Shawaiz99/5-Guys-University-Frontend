@@ -125,7 +125,7 @@ function Profile() {
     try {
       const token = getToken();
       const decoded = getDecodedToken();
-      const userId = parseInt(decoded?.sub); // JWT'den güvenilir userId al
+      const userId = parseInt(decoded?.sub);
 
       const userData = {
         email: form.email,
