@@ -11,6 +11,7 @@ import {
   get_user_by_id,
   changePassword,
   updateUserProfile,
+  updateUser,
 } from "../../api/user";
 import { getDecodedToken, getToken, isTokenValid } from "../../utils/auth";
 import { useEffect } from "react";
@@ -79,38 +80,33 @@ function Profile() {
     }
   };
 
-  // profile data loading
   useEffect(() => {
     const fetchProfile = async () => {
       try {
         const token = getToken();
         if (!token || !isTokenValid()) {
-          console.log("No valid token found");
-          navigate("/signin");
+          navigate("/login");
           return;
         }
 
-        const decodedToken = getDecodedToken();
-        if (decodedToken) {
-          const userResponse = await get_user_by_id(
-            token,
-            parseInt(decodedToken.sub)
-          );
-          console.log("userResponse (initial)", userResponse);
+        const decoded = getDecodedToken();
+        const userResponse = await get_user_by_id(token, parseInt(decoded.sub));
 
-          setProfile({
-            ...userResponse.user,
-            ...userResponse.user.profile_information,
-          });
+        setProfile({
+          id: userResponse.user.id,
+          username: userResponse.user.username,
+          email: userResponse.user.email,
+          user_role: userResponse.user.user_role,
+          ...userResponse.user.profile_information,
+        });
 
-          setForm({
-            first_name: userResponse.user.profile_information?.first_name || "",
-            last_name: userResponse.user.profile_information?.last_name || "",
-            username: userResponse.user.username || "",
-            email: userResponse.user.email || "",
-            user_role: userResponse.user.user_role || "",
-          });
-        }
+        setForm({
+          first_name: userResponse.user.profile_information?.first_name || "",
+          last_name: userResponse.user.profile_information?.last_name || "",
+          username: userResponse.user.username || "",
+          email: userResponse.user.email || "",
+          user_role: userResponse.user.user_role || "",
+        });
       } catch (error) {
         console.error("Error loading profile:", error);
       }
@@ -128,30 +124,34 @@ function Profile() {
   const handleSave = async () => {
     try {
       const token = getToken();
+      const decoded = getDecodedToken();
+      const userId = parseInt(decoded?.sub); // JWT'den güvenilir userId al
+
+      const userData = {
+        email: form.email,
+        username: form.username,
+        user_role: form.user_role,
+      };
 
       const profileData = {
         first_name: form.first_name,
         last_name: form.last_name,
-        username: form.username,
-        email: form.email,
-        user_role: form.user_role,
+        bio: form.bio,
+        city: form.city,
+        phone_number: form.phone_number,
+        state: form.state,
+        zip_code: form.zip_code,
       };
 
-      const response = await updateUserProfile(token, profile.id, profileData);
+      await updateUserProfile(token, userId, profileData);
+      const userResponse = await updateUser(token, userId, userData);
 
       setEditMode(false);
       setProfile({
         ...profile,
-        ...response.profile,
+        ...userResponse.user,
+        ...userResponse.user.profile_information,
       });
-      setForm({
-        first_name: response.profile.first_name || "",
-        last_name: response.profile.last_name || "",
-        username: response.profile.username || "",
-        email: response.profile.email || "",
-        user_role: response.profile.user_role || "",
-      });
-      console.log("profile updated", response.profile);
     } catch (error) {
       console.error("Error updating profile:", error);
     }
@@ -175,7 +175,7 @@ function Profile() {
     try {
       const token = getToken();
       const decoded = getDecodedToken();
-      const userId = parseInt(decoded?.sub); // 👈 burada JWT'den ID alınıyor
+      const userId = parseInt(decoded?.sub);
 
       const response = await uploadProfileImage(token, userId, file);
 

@@ -229,15 +229,26 @@ export async function uploadProfileImage(token, userId, imageFile) {
 export async function changePassword(token, userId, payload) {
   const url = `${API_BASE}${API_PREFIX}/users/${userId}/change-password`;
   const response = await fetch(url, {
-    method: "POST", // veya backend neyi destekliyorsa
-    headers: { ...jsonHeaders, Authorization: `Bearer ${token}` },
+    method: "POST",
+    headers: {
+      ...jsonHeaders,
+      Authorization: `Bearer ${token}`,
+    },
     body: JSON.stringify(payload),
   });
-  const data = await response.json();
+
   if (!response.ok) {
-    throw new Error(data.error || response.statusText);
+    let errorMessage = "Password change failed";
+    try {
+      const errorData = await response.json();
+      errorMessage = errorData.message || errorMessage;
+    } catch {
+      // json parse hatası olursa burası çalışır, hata mesajı değişmez
+    }
+    throw new Error(errorMessage);
   }
-  return data;
+
+  return await response.json();
 }
 
 export async function deleteUser(token, userId) {

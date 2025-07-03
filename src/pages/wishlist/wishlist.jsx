@@ -114,30 +114,31 @@ function WishlistPage() {
 
   return (
     <div className=" py-4">
-      <h2 className="mb-3 fw-bold">My Wishlist</h2>
-
-      {wishlistItems.length === 0 ? (
-        <div className="text-center py-5">
-          <div className="alert alert-info">Your wishlist is empty</div>
-          <button className="btn btn-primary" onClick={() => navigate("/home")}>
-            Browse Books
-          </button>
-        </div>
-      ) : (
-        <div className="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4 mt-3">
-          {wishlistItems.map((book) => (
-            <div className="" key={book.id}>
-              <BookCard
-                book={book}
-                isWishlisted={true}
-                onWishlistAdded={fetchWishlist}
-                onWishlistRemove={handleRemoveItem}
-                addToCart={() => handleAddToCart(book.id)}
-              />
+      <div className="container py-4 flex-column">
+        <h2 className="mb-3 fw-bold">My Wishlist</h2>
+          {wishlistItems.length === 0 ? (
+            <div className="text-center py-5">
+              <div className="alert alert-info">Your wishlist is empty</div>
+              <button className="btn btn-primary" onClick={() => navigate("/home")}>
+                Browse Books
+              </button>
             </div>
-          ))}
-        </div>
-      )}
+          ) : (
+            <div className="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4 mt-3">
+              {wishlistItems.map((book) => (
+                <div className="" key={book.id}>
+                  <BookCard
+                    book={book}
+                    isWishlisted={true}
+                    onWishlistAdded={fetchWishlist}
+                    onWishlistRemove={handleRemoveItem}
+                    addToCart={() => handleAddToCart(book.id)}
+                  />
+                </div>
+              ))}
+            </div>
+          )}
+      </div>
     </div>
   );
 }

@@ -62,9 +62,11 @@ function BooksPage() {
 
   return (
     <div className=" py-4">
-      <h1 className="mb-4">{genre ? `Genre: ${genre}` : "All Books"}</h1>
-      <SearchBar placeholder="Search books..." onSearch={setSearchText} />
-      <BookListings books={filteredBooks} />
+      <div className="container py-4 flex-column">
+        <h1 className="mb-4">{genre ? `Genre: ${genre}` : "All Books"}</h1>
+        <SearchBar placeholder="Search books..." onSearch={setSearchText} />
+        <BookListings books={filteredBooks} />
+    </div>
     </div>
   );
 }

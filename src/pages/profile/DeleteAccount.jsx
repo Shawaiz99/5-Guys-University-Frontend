@@ -12,7 +12,12 @@ function DeleteAccount({ userId }) {
       alert("Please confirm before deleting your account.");
       return;
     }
-    if (!window.confirm("Are you sure you want to delete your account? This action cannot be undone!")) return;
+    if (
+      !window.confirm(
+        "Are you sure you want to delete your account? This action cannot be undone!"
+      )
+    )
+      return;
     try {
       const token = getToken();
       await deleteUser(token, userId);
@@ -27,8 +32,9 @@ function DeleteAccount({ userId }) {
     <div className="">
       <h2 className="text-center">Delete Your Account</h2>
       <p className="text-gray-700 mb-4">
-        Deleting your university library account will remove your borrowing history, reservations, and saved books. 
-        This action <strong>cannot be undone</strong>.
+        Deleting your university library account will remove your borrowing
+        history, reservations, and saved books. This action{" "}
+        <strong>cannot be undone</strong>.
       </p>
 
       <label className="flex items-center mb-4 ">

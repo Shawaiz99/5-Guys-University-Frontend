@@ -1,5 +1,6 @@
 const API_BASE = import.meta.env.VITE_BACKEND_HOST;
 const API_PREFIX = import.meta.env.VITE_API_PREFIX;
+
 export async function registerUser(payload) {
   const URL = `${API_BASE}${API_PREFIX}/auth/register`;
   const response = await fetch(URL, {

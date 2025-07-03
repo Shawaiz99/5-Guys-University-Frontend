@@ -1,15 +1,17 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { IoLibrary } from "react-icons/io5";
+import "./Signup.css";
 import { registerUser } from "../../api/auth";
-import "./SignUp.css";
 
 function SignUp() {
   const [showError, setShowError] = useState({
     show: false,
     message: "",
   });
+
   const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -44,6 +46,7 @@ function SignUp() {
       ...formData,
       [e.target.name]: e.target.value,
     });
+
     if (showError.show) {
       setShowError({
         show: false,
@@ -110,7 +113,7 @@ function SignUp() {
           required
         />
         <div id="passwordHelp" className="form-text">
-          Your password must be at least 6 characters long.
+          Your password must be at least 6 characters long (a-z, A-Z, 0-9).
         </div>
       </div>
       <div className="mb-3">
